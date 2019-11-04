@@ -9,11 +9,12 @@ import "./helpers/external_links.js";
 // Everything below is just to show you how it works. You can delete all of it.
 // ----------------------------------------------------------------------------
 
-import { remote } from "electron";
+import { remote, net } from "electron";
 import jetpack from "fs-jetpack";
 import { greet } from "./hello_world/hello_world";
 import env from "env";
-console.log(env);
+import * as xmlToJSON from "xmlToJSON";
+import * as nhso from "./nhso";
 
 const app = remote.app;
 const appDir = jetpack.cwd(app.getAppPath());
@@ -25,6 +26,9 @@ const schema = {
 	}
 };
 const store = new Store({schema});
+
+let CARDNO = '';
+let TOKEN = '';
 
 // Holy crap! This is browser window with HTML and stuff, but I can read
 // files from disk like it's node.js! Welcome to Electron world :)
@@ -76,6 +80,8 @@ function back(src){
   });
 }
 
+
+
 document.getElementById('linkPage1').addEventListener('click', (src)=>{
   goToPage('page1');
 });
@@ -108,13 +114,14 @@ document.getElementById('back3').addEventListener('click', (src)=>{
 
 function initForm() {
   let data = store.get('nhso');
-  console.log(data);
   if(data === undefined){
     store.set('nhso', {
       cardNo: '',
       token: ''
     });
   } else {
+    CARDNO = data.cardNo;
+    TOKEN = data.token;
     document.getElementById('txtCardNo').value = data.cardNo;
     document.getElementById('txtToken').value = data.token;
   }
@@ -138,5 +145,9 @@ forms.addEventListener('submit', event => {
 
 initForm();
 
+nhso(CARDNO,TOKEN,'1409900017301');
+
+
+console.log(xmlToJSON.parseString('<xml><a>It Works!</a></xml>'));
 
 
