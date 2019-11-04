@@ -15,9 +15,11 @@ import { greet } from "./hello_world/hello_world";
 import env from "env";
 import * as xmlToJSON from "xmlToJSON";
 import * as nhso from "./nhso";
+const { Reader } = require('@dogrocker/thaismartcardreader')
 
 const app = remote.app;
 const appDir = jetpack.cwd(app.getAppPath());
+const myReader = new Reader()
 const Store = require('electron-store');
 const schema = {
 	nhso: {
@@ -143,11 +145,45 @@ forms.addEventListener('submit', event => {
   event.preventDefault()
 })
 
+async function getNhso(cid){
+  let data = await nhso(CARDNO,TOKEN, cid);
+  console.log('======NHSO  RESPONSE DATA=====', data);
+}
+
+function initSmartCard(){
+
+  myReader.on('device-activated', async (event) => {
+    console.log('Device-Activated')
+    console.log(event.name)
+  })
+
+  myReader.on('error', async (err) => {
+    console.log(err)
+  })
+
+  myReader.on('image-reading', (percent) => {
+    console.log(percent)
+  })
+
+  myReader.on('card-removed', (err) => {
+    console.log('== card remove ==')
+  })
+
+  myReader.on('card-inserted', async (person) => {
+    console.log(person);
+    const cid = await person.getCid()
+    const thName = await person.getNameTH()
+    const dob = await person.getDoB()
+    console.log(`CitizenID: ${cid}`)
+    console.log(`THName: ${thName.prefix} ${thName.firstname} ${thName.lastname}`)
+    console.log(`DOB: ${dob.day}/${dob.month}/${dob.year}`);
+    getNhso(cid);
+  })
+
+  myReader.on('device-deactivated', () => { console.log('device-deactivated') })
+}
+
 initForm();
-
-nhso(CARDNO,TOKEN,'1409900017301');
-
-
-console.log(xmlToJSON.parseString('<xml><a>It Works!</a></xml>'));
+initSmartCard();
 
 

@@ -28,9 +28,11 @@
     "e2e": "mocha temp/e2e.js --require source-map-support/register",
     "test": "npm run unit && npm run e2e",
     "start": "node build/start.js",
+    "rebuild": "electron-rebuild",
     "release": "npm test && webpack --config=build/webpack.app.config.js --env=production && electron-builder"
   },
   "dependencies": {
+    "@dogrocker/thaismartcardreader": "^0.2.3",
     "@primer/octicons": "^9.2.0",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
@@ -48,6 +50,7 @@
     "electron": "^4.0.0",
     "electron-builder": "^21.1.5",
     "electron-mocha": "^8.1.1",
+    "electron-rebuild": "^1.8.6",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "mocha": "^6.2.0",
     "source-map-support": "^0.5.6",
