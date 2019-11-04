@@ -1,0 +1,23 @@
+
+body {
+  padding: 20px;
+  color: #525252;
+}
+
+
+
+.card{
+  min-height: 500px;
+  cursor: pointer;
+}
+
+.header-number{
+  font-size: 5rem;
+}
+
+.page {
+  display: none;
+}
+.pageActive {
+  display: block;
+}
