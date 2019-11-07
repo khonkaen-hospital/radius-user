@@ -18,8 +18,7 @@ import * as xmlToJSON from "xmlToJSON";
 import * as nhso from "./nhso";
 import * as radius from "./radius";
 
-
-
+const NProgress = require('nprogress')
 const Store = require('electron-store');
 const _generatePassword = require('password-generator');
 const axios = require('axios').default;
@@ -31,7 +30,7 @@ const app = remote.app;
 const appDir = jetpack.cwd(app.getAppPath());
 const myReader = new Reader()
 
-const apiUrl = 'http://127.0.0.1:3008';
+const apiUrl = 'http://iconnect.kkh.go.th:3008';
 
 const store = new Store({
   user: '',
@@ -151,6 +150,7 @@ function getRadioVal(radios) {
 }
 
 async function login(){
+  NProgress.start();
   if(loginUsername.value && loginPassword.value) {
     let data = {
       username: loginUsername.value,
@@ -172,6 +172,7 @@ async function login(){
       loginPage.style.display = 'none';
       indexPage.style.display = 'block';
     }
+    NProgress.done();
   }
 }
 
@@ -197,6 +198,7 @@ function reset() {
 }
 
 async function createUser() {
+  NProgress.start();
   let settingData = store.get('setting');
   let result = '';
   USERNAME = settingData.usernameFormat == 'idcard'
@@ -215,8 +217,10 @@ async function createUser() {
     );
     txtUsername.innerText = result.username;
     txtPassword.innerText = result.password;
-    txtExpired.innerText = result.expired
+    txtExpired.innerText = result.expired;
+    NProgress.done();
   } catch (error) {
+    NProgress.done();
     alert(error.message);
     console.log(error.message);
   }
@@ -268,7 +272,6 @@ function saveSetting() {
 function verify() {
   let data = store.get('setting');
   let token = store.get('token');
-  console.log(token,'=',data.secretKey);
   return new Promise((resolve, reject) => {
     if(token && data.secretKey){
       jwt.verify(token, data.secretKey, (err, decoded) => {
@@ -285,24 +288,23 @@ function verify() {
 }
 
 async function initApp(){
+  NProgress.start();
   try {
     let data = await verify();
     initSetting();
     if(data !== false) {
       loginPage.style.display = 'none';
       indexPage.style.display = 'block';
-      // let token = store.get('token');
-      // let settingData = store.get('setting');
-      // radius.setToken(apiUrl,token, settingData.printerIp);
     } else {
       loginPage.style.display = 'block';
       indexPage.style.display = 'none';
     }
-    console.log(data);
+    NProgress.done();
   } catch (error) {
     loginPage.style.display = 'block';
     indexPage.style.display = 'none';
     console.log(error);
+    NProgress.done();
   }
 
 
