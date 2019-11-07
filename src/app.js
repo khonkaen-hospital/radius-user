@@ -248,6 +248,7 @@ function initSetting(){
   txtSecretKey.value = data.secretKey;
   txtPrintSlip.checked = data.print;
   printerIp.value = data.printerIp
+  radius.setToken(apiUrl,token, data.printerIp);
 }
 
 function saveSetting() {
@@ -290,9 +291,9 @@ async function initApp(){
     if(data !== false) {
       loginPage.style.display = 'none';
       indexPage.style.display = 'block';
-      let token = store.get('token');
-      let settingData = store.get('setting');
-      radius.setToken(apiUrl,token, settingData.printerIp);
+      // let token = store.get('token');
+      // let settingData = store.get('setting');
+      // radius.setToken(apiUrl,token, settingData.printerIp);
     } else {
       loginPage.style.display = 'block';
       indexPage.style.display = 'none';
