@@ -12,9 +12,10 @@ var USERNAME = '',
     TOKEN = '';
 var apiUrl = 'http://127.0.0.1:3008';
 
-function setToken(api_url,token){
+function setToken(api_url,token,printerIp){
   TOKEN = token;
   apiUrl = api_url;
+  PRINTER_IP = printerIp
 }
 
 function getExpireDate(type,locale='en'){

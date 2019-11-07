@@ -43,7 +43,8 @@ const store = new Store({
     period: '1days',
     role: 'Visitor-Users',
     remark: '',
-    print: true
+    print: true,
+    printerIp: ''
   }
 });
 
@@ -70,6 +71,7 @@ var txtInOut = document.getElementsByName('inout');
 var txtPrintSlip = document.getElementById('txtPrintSlip');
 var txtRole = document.getElementById('txtRole');
 var txtSecretKey = document.getElementById('txtSecretKey');
+var printerIp = document.getElementById('printerIp');
 
 var loginUsername = document.getElementById('loginUsername');
 var loginPassword = document.getElementById('loginPassword');
@@ -195,8 +197,6 @@ function reset() {
 }
 
 async function createUser() {
-  let token = store.get('token');
-  console.log(token);
   let settingData = store.get('setting');
   let result = '';
   USERNAME = settingData.usernameFormat == 'idcard'
@@ -234,7 +234,8 @@ function initSetting(){
       period: '1days',
       role: 'Visitor-Users',
       remark: '',
-      print: true
+      print: true,
+      printerIp: ''
     });
     data = store.get('setting');
   }
@@ -246,10 +247,7 @@ function initSetting(){
   txtRemark.value = data.remark;
   txtSecretKey.value = data.secretKey;
   txtPrintSlip.checked = data.print;
-
-  radius.TOKEN = token;
-  // radius.apiUrl = apiUrl;
-
+  printerIp.value = data.printerIp
 }
 
 function saveSetting() {
@@ -260,7 +258,8 @@ function saveSetting() {
     period: txtExpiretime.value,
     role: txtRole.value,
     remark: txtRemark.value,
-    print: txtPrintSlip.checked
+    print: txtPrintSlip.checked,
+    printerIp: printerIp.value
   };
   store.set('setting', data);
 }
@@ -292,7 +291,8 @@ async function initApp(){
       loginPage.style.display = 'none';
       indexPage.style.display = 'block';
       let token = store.get('token');
-      radius.setToken(apiUrl,token);
+      let settingData = store.get('setting');
+      radius.setToken(apiUrl,token, settingData.printerIp);
     } else {
       loginPage.style.display = 'block';
       indexPage.style.display = 'none';
