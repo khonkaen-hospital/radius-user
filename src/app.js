@@ -10,147 +10,82 @@ import "./helpers/external_links.js";
 // ----------------------------------------------------------------------------
 
 import { remote, net } from "electron";
+import * as jwt from 'jsonwebtoken';
 import jetpack from "fs-jetpack";
 import { greet } from "./hello_world/hello_world";
 import env from "env";
 import * as xmlToJSON from "xmlToJSON";
 import * as nhso from "./nhso";
-const { Reader } = require('@dogrocker/thaismartcardreader')
+import * as radius from "./radius";
 
+
+
+const Store = require('electron-store');
+const _generatePassword = require('password-generator');
+const axios = require('axios').default;
+const moment = require('moment');
+const escpos = require('escpos');
+const generator = require('generate-password');
+const { Reader } = require('@dogrocker/thaismartcardreader')
 const app = remote.app;
 const appDir = jetpack.cwd(app.getAppPath());
 const myReader = new Reader()
-const Store = require('electron-store');
-const schema = {
-	nhso: {
-		cardNo: '',
-		token: ''
-	}
-};
-const store = new Store({schema});
 
-let CARDNO = '';
-let TOKEN = '';
+const apiUrl = 'http://127.0.0.1:3008';
 
-// Holy crap! This is browser window with HTML and stuff, but I can read
-// files from disk like it's node.js! Welcome to Electron world :)
-const manifest = appDir.read("package.json", "json");
+const store = new Store({
+  user: '',
+  token: '',
+  setting: {
+    secretKey: '',
+    usernameFormat: 'idcard',
+    userType: 'in',
+    period: '1days',
+    role: 'Visitor-Users',
+    remark: '',
+    print: true
+  }
+});
 
-const osMap = {
-  win32: "Windows",
-  darwin: "macOS",
-  linux: "Linux"
-};
+let IDENTITY = {};
+let IDCARD = '';
+let USERNAME = '';
+let PASSWORD = '';
+let EXPRIED = '';
+let PRINTER_IP = '10.3.42.77';
 
 var forms = document.getElementById('settingForm');
+var txtName = document.getElementById('firstName');
+var txtSurname = document.getElementById('lastName');
+var txtIdcard = document.getElementById('idcard');
 
-function animateCSS(element, animationName, callback) {
-  const node = document.querySelector(element)
-  node.classList.add('animated', 'faster')
-  node.classList.add('animated', animationName)
+var txtUsername = document.getElementById('txtUsername');
+var txtPassword = document.getElementById('txtPassword');
+var txtExpired = document.getElementById('txtExpired');
+var txtRemark = document.getElementById('txtRemark');
 
-  function handleAnimationEnd() {
-      node.classList.remove('animated', animationName)
-      node.removeEventListener('animationend', handleAnimationEnd)
+var txtExpiretime = document.getElementById('txtExpiretime');
+var txtUsernameFormat = document.getElementsByName('usernameFormat');
+var txtInOut = document.getElementsByName('inout');
+var txtPrintSlip = document.getElementById('txtPrintSlip');
+var txtRole = document.getElementById('txtRole');
+var txtSecretKey = document.getElementById('txtSecretKey');
 
-      if (typeof callback === 'function') callback()
-  }
+var loginUsername = document.getElementById('loginUsername');
+var loginPassword = document.getElementById('loginPassword');
 
-  node.addEventListener('animationend', handleAnimationEnd)
-}
+var btnSave = document.getElementById('btnsave');
+var btnSetting = document.getElementById('btnSetting');
+var btnLogin = document.getElementById('btnLogin');
+var btnLogout = document.getElementById('btnLogout');
 
-let page0 = document.getElementById('page0');
-let page1 = document.getElementById('page1');
-let page2 = document.getElementById('page2');
-let page3 = document.getElementById('page3');
+var loginPage = document.getElementById('login-page');
+var indexPage = document.getElementById('index-page');
+var mainPage = document.getElementById('main-page');
+var settingPage = document.getElementById('setting-page');
+var btnsaveSetting = document.getElementById('btnsaveSetting');
 
-function goToPage(pageId){
-  let page = document.getElementById(pageId);
-  animateCSS('#page0','slideOutUp',()=>{
-    page0.classList.remove('pageActive');
-    page.classList.add('pageActive');
-    animateCSS('#'+pageId,'slideInUp');
-  });
-}
-
-function back(src){
-  let page = src.srcElement.dataset.page;
-  animateCSS('#'+page,'slideOutDown', () => {
-    document.querySelector('#'+page).classList.remove('pageActive');
-    page0.classList.add('pageActive');
-    animateCSS('#page0','slideInDown');
-  });
-}
-
-
-
-document.getElementById('linkPage1').addEventListener('click', (src)=>{
-  goToPage('page1');
-});
-document.getElementById('linkPage2').addEventListener('click', (src)=>{
-  goToPage('page2');
-});
-document.getElementById('linkPage3').addEventListener('click', (src)=>{
-  goToPage('page3');
-});
-
-document.getElementById('linkPage4').addEventListener('click', (src)=>{
-  animateCSS('#page0','slideOutUp',()=>{
-    page0.classList.remove('pageActive');
-    page4.classList.add('pageActive');
-    animateCSS('#page4','slideInUp');
-  });
-});
-
-document.getElementById('back1').addEventListener('click', (src)=>{
-  back(src);
-});
-document.getElementById('back2').addEventListener('click', (src)=>{
-  back(src);
-});
-document.getElementById('back3').addEventListener('click', (src)=>{
-  back(src);
-});
-
-
-
-function initForm() {
-  let data = store.get('nhso');
-  if(data === undefined){
-    store.set('nhso', {
-      cardNo: '',
-      token: ''
-    });
-  } else {
-    CARDNO = data.cardNo;
-    TOKEN = data.token;
-    document.getElementById('txtCardNo').value = data.cardNo;
-    document.getElementById('txtToken').value = data.token;
-  }
-}
-
-forms.addEventListener('submit', event => {
-  let cardNo = document.getElementById('txtCardNo').value;
-  let token = document.getElementById('txtToken').value;
-  store.set('nhso', {
-    cardNo: cardNo,
-		token: token
-  });
-  // back to home page
-  animateCSS('#page4','slideOutDown', () => {
-    document.querySelector('#page4').classList.remove('pageActive');
-    page0.classList.add('pageActive');
-    animateCSS('#page0','slideInDown');
-  });
-  event.preventDefault()
-})
-
-async function getNhso(cid){
-  let data = await nhso(CARDNO,TOKEN, cid);
-  console.log('======NHSO  RESPONSE DATA=====', data);
-}
-
-function initSmartCard(){
+function initSmartCard() {
 
   myReader.on('device-activated', async (event) => {
     console.log('Device-Activated')
@@ -166,24 +101,235 @@ function initSmartCard(){
   })
 
   myReader.on('card-removed', (err) => {
+    reset();
     console.log('== card remove ==')
   })
 
   myReader.on('card-inserted', async (person) => {
-    console.log(person);
+    let createdByUser = store.get('user');
     const cid = await person.getCid()
     const thName = await person.getNameTH()
     const dob = await person.getDoB()
     console.log(`CitizenID: ${cid}`)
     console.log(`THName: ${thName.prefix} ${thName.firstname} ${thName.lastname}`)
     console.log(`DOB: ${dob.day}/${dob.month}/${dob.year}`);
-    getNhso(cid);
+    txtName.value = thName.prefix + thName.firstname;
+    txtSurname.value = thName.lastname;
+    txtIdcard.value = cid.substring(0, 10) + '***';
+    IDCARD = cid;
+    btnSave.disabled = false;
+    IDENTITY = {
+      fullname: `${thName.prefix}${thName.firstname} ${thName.lastname}`,
+      idcard: cid,
+      dob: `${dob.day}/${dob.month}/${dob.year}`
+    }
+    if(isNaN(createdByUser)){
+      IDENTITY.createdById = createdByUser.employeeCode;
+      IDENTITY.createdByName = `${createdByUser.prename}${createdByUser.fname} ${createdByUser.lname}`;
+    }
   })
 
   myReader.on('device-deactivated', () => { console.log('device-deactivated') })
 }
 
-initForm();
+function setRadioChecked(name,value){
+  let query = `input[name=${name}][value=${value}]`;
+  document.querySelector(query).checked=true;
+}
+
+function getRadioVal(radios) {
+  var val;
+  for (var i = 0, len = radios.length; i < len; i++) {
+    if (radios[i].checked) {
+      val = radios[i].value;
+      break;
+    }
+  }
+  return val;
+}
+
+async function login(){
+  if(loginUsername.value && loginPassword.value) {
+    let data = {
+      username: loginUsername.value,
+      password: loginPassword.value
+    };
+
+    let result = await axios({
+      method: 'POST',
+      url: `${apiUrl}/login`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data:data
+    });
+
+    if(result.data.ok == true) {
+      store.set('token',result.data.token);
+      store.set('user',result.data.data);
+      loginPage.style.display = 'none';
+      indexPage.style.display = 'block';
+    }
+  }
+}
+
+function logot() {
+  store.set('token',null);
+  store.set('user',null);
+  initApp();
+}
+
+function reset() {
+  IDENTITY = {};
+  IDCARD = '';
+  USERNAME = '';
+  PASSWORD = '';
+  EXPRIED = '';
+  txtIdcard.value = '';
+  txtName.value = '';
+  txtSurname.value = '';
+  txtUsername.innerText = '';
+  txtPassword.innerText = '';
+  txtExpired.innerText = '';
+  btnSave.disabled = true;
+}
+
+async function createUser() {
+  let token = store.get('token');
+  console.log(token);
+  let settingData = store.get('setting');
+  let result = '';
+  USERNAME = settingData.usernameFormat == 'idcard'
+             ? IDCARD
+             : 'U' + radius.generateUsername(6, false);
+  IDENTITY.remark = settingData.remark || '';
+
+  try {
+    result = await radius.createUser(
+      USERNAME,
+      settingData.role,
+      JSON.stringify(IDENTITY),
+      settingData.period,
+      settingData.userType,
+      settingData.print
+    );
+    txtUsername.innerText = result.username;
+    txtPassword.innerText = result.password;
+    txtExpired.innerText = result.expired
+  } catch (error) {
+    alert(error.message);
+    console.log(error.message);
+  }
+}
+
+function initSetting(){
+  let data = store.get('setting');
+  let token = store.get('token');
+
+  if(data === undefined) {
+    store.set('setting', {
+      secretKey: '',
+      usernameFormat: 'idcard',
+      userType: 'in',
+      period: '1days',
+      role: 'Visitor-Users',
+      remark: '',
+      print: true
+    });
+    data = store.get('setting');
+  }
+
+  setRadioChecked('usernameFormat', data.usernameFormat);
+  setRadioChecked('inout', data.userType);
+  txtExpiretime.value = data.period;
+  txtRole.value = data.role;
+  txtRemark.value = data.remark;
+  txtSecretKey.value = data.secretKey;
+  txtPrintSlip.checked = data.print;
+
+  radius.TOKEN = token;
+  // radius.apiUrl = apiUrl;
+
+}
+
+function saveSetting() {
+  let data = {
+    secretKey: txtSecretKey.value,
+    usernameFormat: getRadioVal(txtUsernameFormat),
+    userType: getRadioVal(txtInOut),
+    period: txtExpiretime.value,
+    role: txtRole.value,
+    remark: txtRemark.value,
+    print: txtPrintSlip.checked
+  };
+  store.set('setting', data);
+}
+
+function verify() {
+  let data = store.get('setting');
+  let token = store.get('token');
+  console.log(token,'=',data.secretKey);
+  return new Promise((resolve, reject) => {
+    if(token && data.secretKey){
+      jwt.verify(token, data.secretKey, (err, decoded) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(decoded)
+        }
+      });
+    } else {
+      resolve(false)
+    }
+  });
+}
+
+async function initApp(){
+  try {
+    let data = await verify();
+    initSetting();
+    if(data !== false) {
+      loginPage.style.display = 'none';
+      indexPage.style.display = 'block';
+      let token = store.get('token');
+      radius.setToken(apiUrl,token);
+    } else {
+      loginPage.style.display = 'block';
+      indexPage.style.display = 'none';
+    }
+    console.log(data);
+  } catch (error) {
+    loginPage.style.display = 'block';
+    indexPage.style.display = 'none';
+    console.log(error);
+  }
+
+
+}
+
+btnSave.addEventListener('click', () => {
+  createUser();
+})
+btnsaveSetting.addEventListener('click', () => {
+  saveSetting();
+  mainPage.style.display = 'block';
+  settingPage.style.display = 'none';
+})
+
+btnSetting.addEventListener('dblclick', () => {
+  mainPage.style.display = 'none';
+  settingPage.style.display = 'block';
+  initSetting();
+})
+
+btnLogin.addEventListener('click', () => {
+  login();
+});
+btnLogout.addEventListener('click', () => {
+  logot();
+});
+
+initApp();
 initSmartCard();
 
 

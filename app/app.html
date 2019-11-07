@@ -2,105 +2,207 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Electron Boilerplate</title>
+  <title> Internet Account </title>
   <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
 
-  <div id="page0" class="container-fluid page pageActive">
-    <h1 style="padding:40px;" id="linkPage4" class="text-center">โรงพยาบาลขอนแก่น</h1>
-    <div class="row">
-      <div class="col-sm">
-          <div id="linkPage1" class="card text-white bg-primary mb-3">
-              <div class="card-header text-center header-number">1</div>
-              <div class="card-body">
-                  <h5 class="card-title text-center">ตรวจสอบสิทธิรักษาพยาบาล</h5>
-                  <p class="card-text">ตรวจสอบสิทธิรักษาพยาบาลของตัวท่านเอง เพียงแค่นำบัตรประชาชนเสียบหน้าตู้ ช่องสีดำด้านขวา รอรับสลิป</p>
-              </div>
-            </div>
-      </div>
-      <div class="col-sm">
-          <div id="linkPage2" class="card text-white bg-success mb-3">
-              <div class="card-header text-center header-number">2</div>
-              <div class="card-body">
-                <h5 class="card-title text-center">ลงทะเบียนนัดตรวจ</h5>
-                <p class="card-text">ลงทะเบียนมาตามนัด เพื่อเข้าห้องตรวจรอรับบริการ โดยการแสกนบาร์โค้ดใบนัดและรอรับเอกสาร</p>
-              </div>
-            </div>
-      </div>
-      <div class="col-sm">
-          <div id="linkPage3" class="card text-white bg-warning mb-3">
-              <div class="card-header text-center header-number">3</div>
-              <div class="card-body">
-                <h5 class="card-title text-center">ลงทะเบียนขอใช้ฟรี Wi-Fi</h5>
-                <p class="card-text">ลงทะเบียนรับฟรี wi-fi ง่ายๆ เพียงแค่นำบัตรประชาชนเสียบหน้าตู้ ช่องสีดำด้านขวา แล้วรับสลิปรายละเอียด Username, Password เพื่อเข้าใช้งาน</p>
-              </div>
-            </div>
-      </div>
-    </div>
-  </div>
+    <div class="container">
 
-  <div id="page1" class="page container-fluid">
-      <div class="card text-white bg-primary mb-3">
-          <div class="card-header text-center header-number">1</div>
-          <div class="card-body">
-            <h5 class="card-title text-center">ตรวจสอบสิทธิรักษาพยาบาล</h5>
-            <p class="card-text">ลงทะเบียนรับฟรี wi-fi ง่ายๆ เพียงแค่นำบัตรประชาชนเสียบหน้าตู้ ช่องสีดำด้านขวา แล้วรับสลิปรายละเอียด Username, Password เพื่อเข้าใช้งาน</p>
-          </div>
-          <div class="card-footer bg-transparent">
-              <button id="back1" class="btn btn-outline-light" data-page="page1"><< กลับหน้าหลัก</button>
-            </div>
+        <div class="text-center">
+          <img id="btnSetting" class="d-block mx-auto mb-4" src="images/logo.png" alt="" width="80" height="80">
+          <h2> Internet Account </h2>
+          <p class="lead"> สำหรับบุคคลภายนอก</p>
         </div>
-  </div>
 
-  <div id="page2" class="page container-fluid">
-      <div class="card text-white bg-success mb-3">
-          <div class="card-header text-center header-number">2</div>
-          <div class="card-body">
-            <h5 class="card-title text-center">ลงทะเบียนนัดตรวจ</h5>
-            <p class="card-text">ลงทะเบียนรับฟรี wi-fi ง่ายๆ เพียงแค่นำบัตรประชาชนเสียบหน้าตู้ ช่องสีดำด้านขวา แล้วรับสลิปรายละเอียด Username, Password เพื่อเข้าใช้งาน</p>
-          </div>
-          <div class="card-footer bg-transparent">
-              <button id="back2" class="btn btn-outline-light" data-page="page2"><< กลับหน้าหลัก</button>
-          </div>
-      </div>
-  </div>
+        <div id="login-page">
+          <br><br>
+             <div class="row justify-content-center">
+               <div class="col-md-4">
+                  <form id="loginForm">
+                      <div  class="form-group">
+                        <label for="loginUsername">Username</label>
+                        <input type="text" class="form-control" id="loginUsername" placeholder="Enter username">
+                      </div>
+                      <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                      </div>
+                      <button type="button" id="btnLogin" class="btn btn-primary btn-block">Login</button>
+                    </form>
+               </div>
+             </div>
 
-  <div id="page3" class="page container-fluid">
-      <div class="card text-white bg-warning mb-3">
-        <div class="card-header text-center header-number">3</div>
-        <div class="card-body">
-          <h5 class="card-title text-center">ลงทะเบียนขอใช้ฟรี Wi-Fi</h5>
-          <p class="card-text">ลงทะเบียนรับฟรี wi-fi ง่ายๆ เพียงแค่นำบัตรประชาชนเสียบหน้าตู้ ช่องสีดำด้านขวา แล้วรับสลิปรายละเอียด Username, Password เพื่อเข้าใช้งาน</p>
         </div>
-        <div class="card-footer bg-transparent">
-          <button id="back3" class="btn btn-outline-light" data-page="page3"><< กลับหน้าหลัก</button>
-        </div>
-      </div>
-  </div>
 
-  <div id="page4" class="page container-fluid">
-    <div class="card  mb-3">
-      <div class="card-header text-center header-number">ตั้งค่า</div>
-      <div class="card-body">
-        <form class="needs-validation" id="settingForm" >
-          <div class="form-row">
-            <div class="col-md-6 mb-3">
-              <label for="txtCardNo">Card No.</label>
-              <input type="text" class="form-control" id="txtCardNo" name="card_no" placeholder=""  required>
+        <div style="display: none;" id="index-page">
+          <div class="row">
+            <div class="col-md-4 order-md-2 mb-4">
+              <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">รายละเอียด Account</span>
+
+              </h4>
+              <br>
+              <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                  <div>
+                    <h6 class="my-0">Username</h6>
+                  </div>
+                  <span class="text-muted"><strong  id="txtUsername"></strong></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                  <div>
+                    <h6 class="my-0">Password</h6>
+                  </div>
+                  <span class="text-muted"><strong id="txtPassword"></strong></span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                  <div class="text-success">
+                    <h6 class="my-0">Expired</h6>
+                  </div>
+                  <span class="text-success" id="txtExpired"></span>
+                </li>
+
+              </ul>
             </div>
-            <div class="col-md-6 mb-3">
-              <label for="txtToken">Token</label>
-              <input type="text" class="form-control" id="txtToken" name="token" placeholder=""  required>
+            <div class="col-md-8 order-md-1">
+
+              <form class="needs-validation" >
+                <div  id="main-page">
+                    <h4 class="mb-3">ข้อมูลผู้ใช้งาน</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="firstName">ชื่อ</label>
+                          <input type="text" disabled class="form-control" id="firstName" placeholder="" value="" required="" data-com.onepassword.iv="">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="lastName">นามสกุล</label>
+                          <input type="text" disabled class="form-control" id="lastName" placeholder="" value="" required="" data-com.onepassword.iv="">
+                        </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-6 mb-3">
+                              <label for="idcard">เลขบัตรประชาชน</label>
+                              <input type="text" disabled class="form-control" id="idcard" placeholder="" value="" required="" data-com.onepassword.iv="">
+                          </div>
+                          <div class="col-md-6 mb-3">
+
+                          </div>
+                      </div>
+                      <br>
+                      <button id="btnsave"  disabled class="btn btn-primary btn-lg btn-block" type="button">ยืนยันขอใช้งาน</button>
+
+                </div>
+
+                <div style="display: none;"  id="setting-page">
+                    <h4 class="mb-3">ตั้งค่าใช้งาน</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="usernameType1">สร้าง Username</label>
+                          <div class="form-check">
+                              <input class="form-check-input" type="radio" name="usernameFormat" id="usernameType1" value="idcard" checked>
+                              <label class="form-check-label" for="usernameType1">
+                                ตามเลขบัตร
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="usernameFormat" id="usernameType2" value="random">
+                              <label class="form-check-label" for="usernameType2">
+                                Random
+                              </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="radioIn">ประเภทผู้ใช้</label>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="inout" id="radioIn" value="in" checked>
+                                <label class="form-check-label" for="radioIn">
+                                  ภายใน
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="inout" id="radioOut" value="out">
+                                <label class="form-check-label" for="radioOut">
+                                    ภายนอก
+                                </label>
+                              </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-6">
+                              <label for="txtExpiretime">ระยะเวลา</label>
+                              <select id="txtExpiretime" class="form-control">
+                                  <option value="1hours">1 ชั่วโมง</option>
+                                  <option value="2hours">2 ชั่วโมง</option>
+                                  <option value="4hours">4 ชั่วโมง</option>
+                                  <option value="6hours">6 ชั่วโมง</option>
+                                  <option value="8hours">8 ชั่วโมง</option>
+
+                                  <option value="1days" selected>1 วัน</option>
+                                  <option value="2days">2 วัน</option>
+                                  <option value="3days">3 วัน</option>
+                                  <option value="4days">4 วัน</option>
+                                  <option value="5days">5 วัน</option>
+                                  <option value="6days">6 วัน</option>
+                                  <option value="1weeks">1 สัปดาห์</option>
+                                  <option value="2weeks">2 สัปดาห์</option>
+                                  <option value="3weeks">3 สัปดาห์</option>
+                                  <option value="1months">1 เดือน</option>
+                                  <option value="2months">2 เดือน</option>
+                                  <option value="3months">3 เดือน</option>
+                                  <option value="4months">4 เดือน</option>
+                                  <option value="5months">5 เดือน</option>
+                                  <option value="6months">6 เดือน</option>
+                                  <option value="7months">7 เดือน</option>
+                                  <option value="8months">8 เดือน</option>
+                                  <option value="9months">9 เดือน</option>
+                                  <option value="10months">10 เดือน</option>
+                                  <option value="11months">11 เดือน</option>
+                                  <option value="1years">1 ปี</option>
+                                </select>
+                          </div>
+                          <div class="col-md-6">
+                              <label for="txtRole">กลุ่มสิทธิ์ผู้ใช้งาน</label>
+                              <select id="txtRole" class="form-control">
+                                  <option value="Visitor-Users">บุคคลภายนอก</option>
+                                  <option value="Conf-Users">สำหรับงานประชุม</option>
+                                  <option value="IPD-Users">สำหรับผู้ป่วยใน</option>
+                                </select>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <label for="txtRemark">หมายเหตุ</label>
+                              <input type="text"   class="form-control" id="txtRemark" >
+                          </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-check">
+                                  <input checked class="form-check-input" type="checkbox"  id="txtPrintSlip">
+                                  <label class="form-check-label" for="txtPrintSlip">
+                                    พิมพ์สลิป
+                                  </label>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <label for="txtRemark">Secret Key</label>
+                              <input type="text"   class="form-control" id="txtSecretKey" >
+                          </div>
+                      </div>
+                      <br>
+                      <button id="btnsaveSetting"  class="btn btn-primary btn-lg btn-block" type="button">บันทึกการตั้งค่า</button>
+                </div>
+
+              </form>
             </div>
           </div>
+        </div>
+        <small><a href="#" id="btnLogout">Logout</a></small>
 
-          <button class="btn btn-primary" type="submit">บันทึก</button>
-        </form>
       </div>
-    </div>
-  </div>
-
   <script src="app.js"></script>
 </body>
 </html>
