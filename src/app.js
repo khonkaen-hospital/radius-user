@@ -163,22 +163,31 @@ async function login(){
       username: loginUsername.value,
       password: loginPassword.value
     };
-
-    let result = await axios({
-      method: 'POST',
-      url: `${apiUrl}/login`,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data:data
-    });
-
-    if(result.data.ok == true) {
-      store.set('token',result.data.token);
-      store.set('user',result.data.data);
-      loginPage.style.display = 'none';
-      indexPage.style.display = 'block';
+    try {
+      let result = await axios({
+        method: 'POST',
+        url: `${apiUrl}/login/old-user`,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data:data
+      });
+      console.log(result);
+      if(result.data.ok == true && result.data.status == 200) {
+        store.set('token',result.data.token);
+        store.set('user',result.data.data);
+        loginPage.style.display = 'none';
+        indexPage.style.display = 'block';
+        passwordHelp.innerText = '';
+      }else if(result.data.status == 400){
+        passwordHelp.innerText = result.data.message;
+      }
+    } catch (error) {
+      console.log(error);
     }
+
+
+
     NProgress.done();
   }
 }
