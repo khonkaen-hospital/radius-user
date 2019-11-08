@@ -2,7 +2,7 @@
   "name": "internet-account",
   "productName": "Internet Account",
   "description": "Kiosk automatic generate internet account",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "author": "Sathit Seethaphon",
   "copyright": "© 2019, Khon Kaen Hospital.",
