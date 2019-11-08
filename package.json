@@ -10,6 +10,8 @@
   "main": "app/background.js",
   "build": {
     "appId": "com.app.internet-account",
+    "productName": "Internet Account",
+    "copyright": "Copyright © Khon Kaen Hospital",
     "files": [
       "app/**/*",
       "node_modules/**/*",
@@ -83,7 +85,7 @@
     "chai": "^4.1.0",
     "css-loader": "^3.1.0",
     "electron": "^4.0.0",
-    "electron-builder": "^21.1.5",
+    "electron-builder": "^21.1.0",
     "electron-mocha": "^8.1.1",
     "electron-rebuild": "^1.8.6",
     "friendly-errors-webpack-plugin": "^1.7.0",
