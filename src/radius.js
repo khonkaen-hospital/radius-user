@@ -9,13 +9,15 @@ var USERNAME = '',
     EXPRIED = '',
     PRINTER_IP = '10.3.42.77';
     IS_INTERNAIL = 'in',
+    PRINTER_TYPE = 'ip',
     TOKEN = '';
 var apiUrl = 'http://127.0.0.1:3008';
 
-function setToken(api_url,token,printerIp){
+function setToken(api_url,token,printerIp, printerType='ip'){
   TOKEN = token;
   apiUrl = api_url;
-  PRINTER_IP = printerIp
+  PRINTER_IP = printerIp;
+  PRINTER_TYPE = printerType;
 }
 
 function getExpireDate(type,locale='en'){
@@ -179,7 +181,12 @@ async function createUser(username, role, remark, expireType='1days', isInternai
 
 
 function print() {
-  const device = new escpos.Network(PRINTER_IP);
+  if(PRINTER_TYPE=='ip') {
+    const device = new escpos.Network(PRINTER_IP);
+  } else {
+    const device = new escpos.USB();
+  }
+
   const printer = new escpos.Printer(device);
 
   device.open(function () {

@@ -43,7 +43,8 @@ const store = new Store({
     role: 'Visitor-Users',
     remark: '',
     print: true,
-    printerIp: ''
+    printerIp: '',
+    printertype:'ip'
   }
 });
 
@@ -67,6 +68,7 @@ var txtRemark = document.getElementById('txtRemark');
 var txtExpiretime = document.getElementById('txtExpiretime');
 var txtUsernameFormat = document.getElementsByName('usernameFormat');
 var txtInOut = document.getElementsByName('inout');
+var printertype = document.getElementsByName('printertype');
 var txtPrintSlip = document.getElementById('txtPrintSlip');
 var txtRole = document.getElementById('txtRole');
 var txtSecretKey = document.getElementById('txtSecretKey');
@@ -135,7 +137,11 @@ function initSmartCard() {
 
 function setRadioChecked(name,value){
   let query = `input[name=${name}][value=${value}]`;
-  document.querySelector(query).checked=true;
+  try {
+    document.querySelector(query).checked=true;
+  } catch (error) {
+
+  }
 }
 
 function getRadioVal(radios) {
@@ -239,20 +245,22 @@ function initSetting(){
       role: 'Visitor-Users',
       remark: '',
       print: true,
-      printerIp: ''
+      printerIp: '',
+      printertype:'ip'
     });
     data = store.get('setting');
   }
 
   setRadioChecked('usernameFormat', data.usernameFormat);
   setRadioChecked('inout', data.userType);
+  setRadioChecked('printertype', data.printertype);
   txtExpiretime.value = data.period;
   txtRole.value = data.role;
   txtRemark.value = data.remark;
   txtSecretKey.value = data.secretKey;
   txtPrintSlip.checked = data.print;
   printerIp.value = data.printerIp
-  radius.setToken(apiUrl,token, data.printerIp);
+  radius.setToken(apiUrl,token, data.printerIp, data.printertype);
 }
 
 function saveSetting() {
@@ -264,7 +272,8 @@ function saveSetting() {
     role: txtRole.value,
     remark: txtRemark.value,
     print: txtPrintSlip.checked,
-    printerIp: printerIp.value
+    printerIp: printerIp.value,
+    printertype: getRadioVal(printertype)
   };
   store.set('setting', data);
 }

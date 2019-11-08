@@ -1,15 +1,15 @@
 {
-  "name": "electron-boilerplate",
-  "productName": "Electron Boilerplate",
-  "description": "Starter for your Electron application",
-  "version": "0.0.0",
+  "name": "internet-account",
+  "productName": "Internet Account",
+  "description": "Kiosk automatic generate internet account",
+  "version": "1.0.0",
   "private": true,
-  "author": "Mr. Gumby <mr.gumby@example.com>",
-  "copyright": "© 2017, Gumby inc.",
+  "author": "Sathit Seethaphon",
+  "copyright": "© 2019, Khon Kaen Hospital.",
   "homepage": "http://example.com",
   "main": "app/background.js",
   "build": {
-    "appId": "com.example.electron-boilerplate",
+    "appId": "com.app.internet-account",
     "files": [
       "app/**/*",
       "node_modules/**/*",
@@ -18,7 +18,31 @@
     "directories": {
       "buildResources": "resources"
     },
-    "publish": null
+    "mac": {
+      "category": "public.app.kkh.edc-connect",
+      "type": "distribution",
+      "darkModeSupport": true
+    },
+    "win": {
+      "target": [
+        "portable",
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
+    },
+    "publish": [
+      "github"
+    ]
   },
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
@@ -29,7 +53,10 @@
     "test": "npm run unit && npm run e2e",
     "start": "node build/start.js",
     "rebuild": "electron-rebuild",
-    "release": "npm test && webpack --config=build/webpack.app.config.js --env=production && electron-builder"
+    "release": "npm test && webpack --config=build/webpack.app.config.js --env=production && electron-builder",
+    "release:mac": "electron-builder --mac -p always",
+    "release:win32": "electron-builder --win -p always",
+    "release:linux": "electron-builder --linux -p always"
   },
   "dependencies": {
     "@dogrocker/thaismartcardreader": "^0.2.3",
