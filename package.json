@@ -12,6 +12,7 @@
     "appId": "com.app.internet-account",
     "productName": "Internet Account",
     "copyright": "Copyright © Khon Kaen Hospital",
+    "generateUpdatesFilesForAllChannels": true,
     "files": [
       "app/**/*",
       "node_modules/**/*",

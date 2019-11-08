@@ -304,15 +304,18 @@ async function initApp(){
     initSetting();
     if(data !== false) {
       loginPage.style.display = 'none';
+      settingPage.style.display = 'none';
       indexPage.style.display = 'block';
     } else {
       loginPage.style.display = 'block';
       indexPage.style.display = 'none';
+      settingPage.style.display = 'none';
     }
     NProgress.done();
   } catch (error) {
     loginPage.style.display = 'block';
     indexPage.style.display = 'none';
+    settingPage.style.display = 'none';
     console.log(error);
     NProgress.done();
   }
@@ -323,14 +326,15 @@ async function initApp(){
 btnSave.addEventListener('click', () => {
   createUser();
 })
+
 btnsaveSetting.addEventListener('click', () => {
   saveSetting();
-  mainPage.style.display = 'block';
-  settingPage.style.display = 'none';
+  initApp();
 })
 
 btnSetting.addEventListener('dblclick', () => {
-  mainPage.style.display = 'none';
+  loginPage.style.display = 'none';
+  indexPage.style.display = 'none';
   settingPage.style.display = 'block';
   initSetting();
 })
