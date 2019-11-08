@@ -36,7 +36,7 @@ const store = new Store({
   user: '',
   token: '',
   setting: {
-    secretKey: '',
+    secretKey: '072f789acfee57e2c542da0d5169b4b8',
     usernameFormat: 'idcard',
     userType: 'in',
     period: '1days',
@@ -126,7 +126,8 @@ function initSmartCard() {
       idcard: cid,
       dob: `${dob.day}/${dob.month}/${dob.year}`
     }
-    if(isNaN(createdByUser)){
+    console.log(createdByUser)
+    if(!isNaN(createdByUser) || createdByUser !== undefined){
       IDENTITY.createdById = createdByUser.employeeCode;
       IDENTITY.createdByName = `${createdByUser.prename}${createdByUser.fname} ${createdByUser.lname}`;
     }
@@ -238,7 +239,7 @@ function initSetting(){
 
   if(data === undefined) {
     store.set('setting', {
-      secretKey: '',
+      secretKey: '072f789acfee57e2c542da0d5169b4b8',
       usernameFormat: 'idcard',
       userType: 'in',
       period: '1days',

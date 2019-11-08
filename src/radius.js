@@ -181,10 +181,11 @@ async function createUser(username, role, remark, expireType='1days', isInternai
 
 
 function print() {
+  var device = null;
   if(PRINTER_TYPE=='ip') {
-    const device = new escpos.Network(PRINTER_IP);
+     device = new escpos.Network(PRINTER_IP);
   } else {
-    const device = new escpos.USB();
+     device = new escpos.USB();
   }
 
   const printer = new escpos.Printer(device);
