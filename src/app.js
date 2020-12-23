@@ -44,7 +44,7 @@ const store = new Store({
     remark: '',
     print: true,
     printerIp: '',
-    printertype:'ip'
+    printertype: 'ip'
   }
 });
 
@@ -127,7 +127,7 @@ function initSmartCard() {
       dob: `${dob.day}/${dob.month}/${dob.year}`
     }
     console.log(createdByUser)
-    if(!isNaN(createdByUser) || createdByUser !== undefined){
+    if (!isNaN(createdByUser) || createdByUser !== undefined) {
       IDENTITY.createdById = createdByUser.employeeCode;
       IDENTITY.createdByName = `${createdByUser.prename}${createdByUser.fname} ${createdByUser.lname}`;
     }
@@ -136,10 +136,10 @@ function initSmartCard() {
   myReader.on('device-deactivated', () => { console.log('device-deactivated') })
 }
 
-function setRadioChecked(name,value){
+function setRadioChecked(name, value) {
   let query = `input[name=${name}][value=${value}]`;
   try {
-    document.querySelector(query).checked=true;
+    document.querySelector(query).checked = true;
   } catch (error) {
 
   }
@@ -156,9 +156,9 @@ function getRadioVal(radios) {
   return val;
 }
 
-async function login(){
+async function login() {
   NProgress.start();
-  if(loginUsername.value && loginPassword.value) {
+  if (loginUsername.value && loginPassword.value) {
     let data = {
       username: loginUsername.value,
       password: loginPassword.value
@@ -170,17 +170,19 @@ async function login(){
         headers: {
           'Content-Type': 'application/json'
         },
-        data:data
+        data: data
       });
-      console.log(result);
-      if(result.data.ok == true && result.data.status == 200) {
-        store.set('token',result.data.token);
-        store.set('user',result.data.data);
+
+      if (result.data.ok == true && result.data.status == 200) {
+        console.log('login-success', result);
         loginPage.style.display = 'none';
         indexPage.style.display = 'block';
         passwordHelp.innerText = '';
-      }else if(result.data.status == 400){
+        store.set('token', result.data.token);
+        store.set('user', result.data.data);
+      } else if (result.data.status == 400) {
         passwordHelp.innerText = result.data.message;
+        alert('Username หรือ Password ไม่ถูกต้อง')
       }
     } catch (error) {
       console.log(error);
@@ -193,8 +195,8 @@ async function login(){
 }
 
 function logot() {
-  store.set('token',null);
-  store.set('user',null);
+  store.set('token', null);
+  store.set('user', null);
   initApp();
 }
 
@@ -218,8 +220,8 @@ async function createUser() {
   let settingData = store.get('setting');
   let result = '';
   USERNAME = settingData.usernameFormat == 'idcard'
-             ? IDCARD
-             : 'U' + radius.generateUsername(6, false);
+    ? IDCARD
+    : 'U' + radius.generateUsername(6, false);
   IDENTITY.remark = settingData.remark || '';
 
   try {
@@ -242,11 +244,11 @@ async function createUser() {
   }
 }
 
-function initSetting(){
+function initSetting() {
   let data = store.get('setting');
   let token = store.get('token');
 
-  if(data === undefined) {
+  if (data === undefined) {
     store.set('setting', {
       secretKey: '072f789acfee57e2c542da0d5169b4b8',
       usernameFormat: 'idcard',
@@ -256,7 +258,7 @@ function initSetting(){
       remark: '',
       print: true,
       printerIp: '',
-      printertype:'ip'
+      printertype: 'ip'
     });
     data = store.get('setting');
   }
@@ -270,7 +272,7 @@ function initSetting(){
   txtSecretKey.value = data.secretKey;
   txtPrintSlip.checked = data.print;
   printerIp.value = data.printerIp
-  radius.setToken(apiUrl,token, data.printerIp, data.printertype);
+  radius.setToken(apiUrl, token, data.printerIp, data.printertype);
 }
 
 function saveSetting() {
@@ -292,7 +294,7 @@ function verify() {
   let data = store.get('setting');
   let token = store.get('token');
   return new Promise((resolve, reject) => {
-    if(token && data.secretKey){
+    if (token && data.secretKey) {
       jwt.verify(token, data.secretKey, (err, decoded) => {
         if (err) {
           reject(err)
@@ -306,12 +308,12 @@ function verify() {
   });
 }
 
-async function initApp(){
+async function initApp() {
   NProgress.start();
   try {
     let data = await verify();
     initSetting();
-    if(data !== false) {
+    if (data !== false) {
       loginPage.style.display = 'none';
       settingPage.style.display = 'none';
       indexPage.style.display = 'block';

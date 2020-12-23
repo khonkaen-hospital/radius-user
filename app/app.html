@@ -15,7 +15,7 @@
     <div class="text-center">
       <img id="btnSetting" class="d-block mx-auto mb-4" src="images/logo.png" alt="" width="80" height="80">
       <h2> Internet Account </h2>
-      <p class="lead"> สำหรับบุคคลภายนอก</p>
+      <p class="lead"> สำหรับบุคคลภายนอก โรงพยาบาลขอนแก่น</p>
     </div>
 
     <div id="login-page">
@@ -73,7 +73,7 @@
         <div class="col-md-8 order-md-1">
 
           <form class="needs-validation">
-            <div >
+            <div>
               <h4 class="mb-3">ข้อมูลผู้ใช้งาน</h4>
               <div class="row">
                 <div class="col-md-6 mb-3">
@@ -108,140 +108,140 @@
     </div>
 
     <div style="display: none;" id="setting-page">
-        <h4 class="mb-3">ตั้งค่าใช้งาน</h4>
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label for="usernameType1">สร้าง Username</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="usernameFormat" id="usernameType1" value="idcard"
-                checked>
-              <label class="form-check-label" for="usernameType1">
-                ตามเลขบัตร
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="usernameFormat" id="usernameType2" value="random">
-              <label class="form-check-label" for="usernameType2">
-                Random
-              </label>
-            </div>
+      <h4 class="mb-3">ตั้งค่าใช้งาน</h4>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="usernameType1">สร้าง Username</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="usernameFormat" id="usernameType1" value="idcard"
+              checked>
+            <label class="form-check-label" for="usernameType1">
+              ตามเลขบัตร
+            </label>
           </div>
-          <div class="col-md-6 mb-3">
-            <label for="radioIn">ประเภทผู้ใช้</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="inout" id="radioIn" value="in" checked>
-              <label class="form-check-label" for="radioIn">
-                ภายใน
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="inout" id="radioOut" value="out">
-              <label class="form-check-label" for="radioOut">
-                ภายนอก
-              </label>
-            </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="usernameFormat" id="usernameType2" value="random">
+            <label class="form-check-label" for="usernameType2">
+              Random
+            </label>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label for="txtExpiretime">ระยะเวลา</label>
-            <select id="txtExpiretime" class="form-control">
-              <option value="1hours">1 ชั่วโมง</option>
-              <option value="2hours">2 ชั่วโมง</option>
-              <option value="4hours">4 ชั่วโมง</option>
-              <option value="6hours">6 ชั่วโมง</option>
-              <option value="8hours">8 ชั่วโมง</option>
-
-              <option value="1days" selected>1 วัน</option>
-              <option value="2days">2 วัน</option>
-              <option value="3days">3 วัน</option>
-              <option value="4days">4 วัน</option>
-              <option value="5days">5 วัน</option>
-              <option value="6days">6 วัน</option>
-              <option value="1weeks">1 สัปดาห์</option>
-              <option value="2weeks">2 สัปดาห์</option>
-              <option value="3weeks">3 สัปดาห์</option>
-              <option value="1months">1 เดือน</option>
-              <option value="2months">2 เดือน</option>
-              <option value="3months">3 เดือน</option>
-              <option value="4months">4 เดือน</option>
-              <option value="5months">5 เดือน</option>
-              <option value="6months">6 เดือน</option>
-              <option value="7months">7 เดือน</option>
-              <option value="8months">8 เดือน</option>
-              <option value="9months">9 เดือน</option>
-              <option value="10months">10 เดือน</option>
-              <option value="11months">11 เดือน</option>
-              <option value="1years">1 ปี</option>
-            </select>
+        <div class="col-md-6 mb-3">
+          <label for="radioIn">ประเภทผู้ใช้</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="inout" id="radioIn" value="in" checked>
+            <label class="form-check-label" for="radioIn">
+              ภายใน
+            </label>
           </div>
-          <div class="col-md-6">
-            <label for="txtRole">กลุ่มสิทธิ์ผู้ใช้งาน</label>
-            <select id="txtRole" class="form-control">
-              <option value="Visitor-Users">บุคคลภายนอก</option>
-              <option value="Conf-Users">สำหรับงานประชุม</option>
-              <option value="IPD-Users">สำหรับผู้ป่วยใน</option>
-            </select>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="inout" id="radioOut" value="out">
+            <label class="form-check-label" for="radioOut">
+              ภายนอก
+            </label>
           </div>
         </div>
-
-        <div class="row">
-          <div class="col-md-12">
-            <label for="txtRemark">หมายเหตุ</label>
-            <input type="text" class="form-control" id="txtRemark">
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
-
-            <label for="txtRemark">Secret Key</label>
-            <input type="text" class="form-control" id="txtSecretKey">
-
-          </div>
-          <div class="col-md-6">
-            <label for="printerIp">Printer IP</label>
-            <input type="text" class="form-control" id="printerIp">
-          </div>
-        </div>
-
-        <br>
-        <div class="row">
-          <div class="col-md-6">
-            <label for="radioIn">ประเภท Printer</label>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="printertype" id="printerIp" value="ip" checked>
-              <label class="form-check-label" for="printerIp">
-                IP
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="printertype" id="printerUsb" value="usb">
-              <label class="form-check-label" for="printerUsb">
-                USB
-              </label>
-            </div>
-
-          </div>
-          <div class="col-md-6">
-            <div class="form-check">
-              <input checked class="form-check-input" type="checkbox" id="txtPrintSlip">
-              <label class="form-check-label" for="txtPrintSlip">
-                พิมพ์สลิป
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <br>
-        <button id="btnsaveSetting" class="btn btn-primary btn-lg btn-block" type="button">บันทึกการตั้งค่า</button>
-        <br>
-        <footer class="mastfoot mt-auto">
-          <div class="inner text-right">
-            <p> <a href="#" id="btnLogout">Logout</a></p>
-          </div>
-        </footer>
       </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="txtExpiretime">ระยะเวลา</label>
+          <select id="txtExpiretime" class="form-control">
+            <option value="1hours">1 ชั่วโมง</option>
+            <option value="2hours">2 ชั่วโมง</option>
+            <option value="4hours">4 ชั่วโมง</option>
+            <option value="6hours">6 ชั่วโมง</option>
+            <option value="8hours">8 ชั่วโมง</option>
+
+            <option value="1days" selected>1 วัน</option>
+            <option value="2days">2 วัน</option>
+            <option value="3days">3 วัน</option>
+            <option value="4days">4 วัน</option>
+            <option value="5days">5 วัน</option>
+            <option value="6days">6 วัน</option>
+            <option value="1weeks">1 สัปดาห์</option>
+            <option value="2weeks">2 สัปดาห์</option>
+            <option value="3weeks">3 สัปดาห์</option>
+            <option value="1months">1 เดือน</option>
+            <option value="2months">2 เดือน</option>
+            <option value="3months">3 เดือน</option>
+            <option value="4months">4 เดือน</option>
+            <option value="5months">5 เดือน</option>
+            <option value="6months">6 เดือน</option>
+            <option value="7months">7 เดือน</option>
+            <option value="8months">8 เดือน</option>
+            <option value="9months">9 เดือน</option>
+            <option value="10months">10 เดือน</option>
+            <option value="11months">11 เดือน</option>
+            <option value="1years">1 ปี</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="txtRole">กลุ่มสิทธิ์ผู้ใช้งาน</label>
+          <select id="txtRole" class="form-control">
+            <option value="Visitor-Users">บุคคลภายนอก</option>
+            <option value="Conf-Users">สำหรับงานประชุม</option>
+            <option value="IPD-Users">สำหรับผู้ป่วยใน</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <label for="txtRemark">หมายเหตุ</label>
+          <input type="text" class="form-control" id="txtRemark">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+
+          <label for="txtRemark">Secret Key</label>
+          <input type="text" class="form-control" id="txtSecretKey">
+
+        </div>
+        <div class="col-md-6">
+          <label for="printerIp">Printer IP</label>
+          <input type="text" class="form-control" id="printerIp">
+        </div>
+      </div>
+
+      <br>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="radioIn">ประเภท Printer</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="printertype" id="printerIp" value="ip" checked>
+            <label class="form-check-label" for="printerIp">
+              IP
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="printertype" id="printerUsb" value="usb">
+            <label class="form-check-label" for="printerUsb">
+              USB
+            </label>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="form-check">
+            <input checked class="form-check-input" type="checkbox" id="txtPrintSlip">
+            <label class="form-check-label" for="txtPrintSlip">
+              พิมพ์สลิป
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <button id="btnsaveSetting" class="btn btn-primary btn-lg btn-block" type="button">บันทึกการตั้งค่า</button>
+      <br>
+      <footer class="mastfoot mt-auto">
+        <div class="inner text-right">
+          <p> <a href="#" id="btnLogout">Logout</a></p>
+        </div>
+      </footer>
+    </div>
 
   </div>
   <script src="app.js"></script>
