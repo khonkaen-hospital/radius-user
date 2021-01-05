@@ -64,7 +64,7 @@
   "dependencies": {
     "@dogrocker/thaismartcardreader": "^0.2.3",
     "@primer/octicons": "^9.6.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "electron-store": "^5.2.0",
     "escpos": "^2.5.2",
